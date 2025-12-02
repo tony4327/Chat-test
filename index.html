@@ -3,140 +3,89 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
 <title>AI ChatBox</title>
 
 <style>
-  html, body { height: 100%; margin: 0; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 整體排版 —— 卡片置底 */
   body {
     position: relative;
     display: flex;
-    /* align-items: center; */
     align-items: flex-end;
     justify-content: center;
     font-family: Arial, sans-serif;
-    transition: background-image 1s ease-in-out;
-    height: 40vh;
-
-
-  background-position: center;
-  background-repeat: no-repeat;
+    padding-bottom: 40px; /* 底部留白 */
+    overflow-x: hidden;
   }
 
-  body::before{
-    content: "";
+  /* 🔥 背景圖片容器（可被 JS 動態更新） */
+  .bg {
     position: fixed;
     inset: 0;
-    background-image: url('1.jpg');
-    background-repeat: no-repeat;
+    background-size: contain;     /* 保證手機不裁切 */
     background-position: center;
-    background-size: cover;
-    opacity: 0.12;
+    background-repeat: no-repeat;
+    opacity: 0.15;
     z-index: 1;
     pointer-events: none;
     transition: background-image 1s ease-in-out;
   }
 
+  /* 半透明卡片 */
   .card {
     position: relative;
     z-index: 2;
-    /*width: 400px;
-    height: 200px;*/
     width: 90%;
-    max-width: 400px;
-    
-    background: white;
+    max-width: 450px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
     border-radius: 25px;
     box-shadow: 0 10px 35px rgba(0,0,0,0.15);
-    display: flex;
-    overflow: hidden;
-  }
-
-  .left {
-    flex: 1;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;  
+    padding: 35px 25px;
     text-align: center;
   }
 
-  .right { 
-    flex:1; 
-    background:#676db4; 
-    display:flex; 
-    align-items:flex-end; 
-    justify-content:center; 
-  }
-
-  .right img{ width:70%; position:relative; bottom:0; }
-
+  /* 手機自適應 */
   @media (max-width:768px){
-    .card{ width:95%; height:auto; flex-direction:column; }
-    .right img{ width:50%; }
+    .card {
+      width: 92%;
+      padding: 28px 20px;
+      border-radius: 18px;
+    }
+    h2 { font-size: 20px; }
+    h3 { font-size: 15px; }
   }
 </style>
 
 </head>
 <body>
 
-  <div class="card">
-    <div class="left">
-      <h2>全港大學的資訊盡在這裡。</h2>
-      <h3>按開始向AI查詢詳細資訊!!</h3>
+<!-- 🔥 背景圖層（由 JS 改變背景） -->
+<div class="bg"></div>
 
-      <a href="https://tony4327.github.io/Chat-AI/" 
-      style="padding:12px 20px;margin:8px;background:#005bff;color:#fff;
-      border:none;border-radius:8px;text-decoration:none;display:inline-block;">
-      開始</a>
-    </div>
-  </div>
+<!-- 卡片內容 -->
+<div class="card">
+    <h2>全港大學的資訊盡在這裡。</h2>
+    <h3>按開始向AI查詢詳細資訊!!</h3>
+
+    <a href="https://tony4327.github.io/Chat-AI/" 
+    style="padding:12px 20px;margin-top:10px;background:#005bff;color:#fff;
+    border:none;border-radius:8px;text-decoration:none;display:inline-block;">
+    開始</a>
+</div>
 
 <script>
+  /* 12 張圖片（你也可換成本地 1.jpg~12.jpg） */
   const images = [
     "https://upload.wikimedia.org/wikipedia/zh-yue/thumb/3/32/University_of_Hong_Kong.svg/1068px-University_of_Hong_Kong.svg.png",
-"https://upload.wikimedia.org/wikipedia/commons/5/50/Emblem_of_CU.png",
-"https://upload.wikimedia.org/wikipedia/zh-yue/7/77/HKUST.svg",
-"https://upload.wikimedia.org/wikipedia/zh-yue/thumb/5/52/PolyU.svg/1186px-PolyU.svg.png",
-"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxyKopOlZyfpruudzCn4mIYdS5dM2zsZR-TQ&s",
-"https://upload.wikimedia.org/wikipedia/zh/thumb/7/79/HKBU_logo.svg/1200px-HKBU_logo.svg.png",
-"https://upload.wikimedia.org/wikipedia/zh/7/72/Hklingnanlogo.png",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Logo_of_The_Education_University_of_Hong_Kong.svg/2560px-Logo_of_The_Education_University_of_Hong_Kong.svg.png",
-"https://www.hkmu.edu.hk/wp-content/uploads/2021/08/HKMU__LOGO.png",
-"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI2RfhHvUJj7UvDJnK9YD_EdcgxL-joo-4w&s",
-"https://upload.wikimedia.org/wikipedia/zh/thumb/7/72/Hong_Kong_Shue_Yan_University_logo.svg/1200px-Hong_Kong_Shue_Yan_University_logo.svg.png",
-"https://media.goodschool.hk/images/ulogo/hkapa.png"
-  ];
-
-  function changeBackground() {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    const url = images[randomIndex];
-
-    document.body.style.setProperty(
-      "--bg-image",
-      `url('${url}')`
-    );
-
-    document.querySelector("body::before") 
-  }
-
-  
-  function updateBackground() {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    const url = images[randomIndex];
-
-    document.body.style.setProperty("--current-bg", `url('${url}')`);
-    document.body.style.backgroundImage = `url('${url}')`;
-
-    document.body.style.setProperty("--bgimg", `url('${url}')`);
-    document.querySelector("body").style.setProperty("--bgimg", `url('${url}')`);
-    document.styleSheets[0].cssRules[1].style.backgroundImage = `url('${url}')`;
-  }
-
-  updateBackground();
-
-  setInterval(updateBackground, 4000);
-</script>
-
-</body>
-</html>
+    "https://upload.wikimedia.org/wikipedia/commons/5/50/Emblem_of_CU.png",
+    "https://upload.wikimedia.org/wikipedia/zh-yue/7/77/HKUST.svg",
+    "https://upload.wikimedia.org/wikipedia/zh-yue/thumb/5/52/PolyU.svg/1186px-PolyU.svg.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxyKopOlZyfpruudzCn4mIYdS5dM2zsZR-TQ&s",
+    "https:/
