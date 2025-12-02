@@ -13,23 +13,23 @@
     padding: 0;
   }
 
-  /* 整體排版 —— 卡片置底 */
+  /* 框框置底 */
   body {
     position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     font-family: Arial, sans-serif;
-    padding-bottom: 40px; /* 底部留白 */
+    padding-bottom: 40px; 
     overflow-x: hidden;
     height: 90vh;
   }
 
-  /* 🔥 背景圖片容器（可被 JS 動態更新） */
+
   .bg {
     position: fixed;
     inset: 0;
-    background-size: contain;     /* 保證手機不裁切 */
+    background-size: contain;     /* 手機唔cut圖 */
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.15;
@@ -38,7 +38,7 @@
     transition: background-image 1s ease-in-out;
   }
 
-  /* 半透明卡片 */
+  /* 半透明 */
   .card {
     position: relative;
     z-index: 2;
@@ -52,7 +52,7 @@
     text-align: center;
   }
 
-  /* 手機自適應 */
+  /* 手機適應 */
   @media (max-width:768px){
     .card {
       width: 92%;
@@ -67,10 +67,10 @@
 </head>
 <body>
 
-<!-- 🔥 背景圖層（由 JS 改變背景） -->
+
 <div class="bg"></div>
 
-<!-- 卡片內容 -->
+
 <div class="card">
     <h2>全港大學的資訊盡在這裡。</h2>
     <h3>按開始向AI查詢詳細資訊!!</h3>
@@ -82,7 +82,7 @@
 </div>
 
 <script>
-  /* 12 張圖片（你也可換成本地 1.jpg~12.jpg） */
+
   const images = [
     "https://upload.wikimedia.org/wikipedia/zh-yue/thumb/3/32/University_of_Hong_Kong.svg/1068px-University_of_Hong_Kong.svg.png",
     "https://upload.wikimedia.org/wikipedia/commons/5/50/Emblem_of_CU.png",
@@ -100,14 +100,14 @@
 
   const bgDiv = document.querySelector(".bg");
 
-  /* 隨機更換背景 */
+  /* 隨機背景 */
   function updateBackground() {
     const index = Math.floor(Math.random() * images.length);
     bgDiv.style.backgroundImage = `url('${images[index]}')`;
   }
 
-  updateBackground();               // 一開始先換一次
-  setInterval(updateBackground, 4000); // 每 4 秒換一次
+  updateBackground();               
+  setInterval(updateBackground, 4000); /*  4秒換一次*/
 </script>
 
 </body>
