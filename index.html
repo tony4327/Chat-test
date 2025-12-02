@@ -22,6 +22,7 @@
     font-family: Arial, sans-serif;
     padding-bottom: 40px; /* 底部留白 */
     overflow-x: hidden;
+    height: 90vh;
   }
 
   /* 🔥 背景圖片容器（可被 JS 動態更新） */
@@ -88,4 +89,26 @@
     "https://upload.wikimedia.org/wikipedia/zh-yue/7/77/HKUST.svg",
     "https://upload.wikimedia.org/wikipedia/zh-yue/thumb/5/52/PolyU.svg/1186px-PolyU.svg.png",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxyKopOlZyfpruudzCn4mIYdS5dM2zsZR-TQ&s",
-    "https:/
+    "https://upload.wikimedia.org/wikipedia/zh/thumb/7/79/HKBU_logo.svg/1200px-HKBU_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/zh/7/72/Hklingnanlogo.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Logo_of_The_Education_University_of_Hong_Kong.svg/2560px-Logo_of_The_Education_University_of_Hong_Kong.svg.png",
+    "https://www.hkmu.edu.hk/wp-content/uploads/2021/08/HKMU__LOGO.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI2RfhHvUJj7UvDJnK9YD_EdcgxL-joo-4w&s",
+    "https://upload.wikimedia.org/wikipedia/zh/thumb/7/72/Hong_Kong_Shue_Yan_University_logo.svg/1200px-Hong_Kong_Shue_Yan_University_logo.svg.png",
+    "https://media.goodschool.hk/images/ulogo/hkapa.png"
+  ];
+
+  const bgDiv = document.querySelector(".bg");
+
+  /* 隨機更換背景 */
+  function updateBackground() {
+    const index = Math.floor(Math.random() * images.length);
+    bgDiv.style.backgroundImage = `url('${images[index]}')`;
+  }
+
+  updateBackground();               // 一開始先換一次
+  setInterval(updateBackground, 4000); // 每 4 秒換一次
+</script>
+
+</body>
+</html>
